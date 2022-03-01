@@ -65,11 +65,7 @@ function App() {
           <h3>{quest.title}</h3>
           {quest.objectives
             .filter(
-              (questRequirements) =>
-                questRequirements.targetItem !== null &&
-                questRequirements.targetItem.name !== "MS2000 Marker" &&
-                questRequirements.targetItem.name !== "WI-FI Camera" &&
-                questRequirements.targetItem.name !== "Signal Jammer"
+              (questRequirements) => questRequirements.targetItem !== null
             )
             .map((questRequirements) => (
               <div>
