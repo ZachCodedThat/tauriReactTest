@@ -16,6 +16,11 @@
   place-content: center;
 }
 
+.quest-item img {
+  max-width: 150px;
+  max-height: 150px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
