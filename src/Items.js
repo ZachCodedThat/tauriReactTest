@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { useState, useEffect, useRef } from "react";
 import useDebounce from "./useDebounce";
 import Fuse from "fuse.js";
-import supabase from "./supabase.png";
+import killaImage from "./killaImage.gif";
 import NumberFormat from "react-number-format";
 
 import { ITEM_RESULTS, QUEST_RESULTS } from "./Queries";
@@ -14,6 +14,7 @@ const ItemsQuery = () => {
   const [queryResults, setQueryResults] = useState([]); // I an stupid and thought this would be an {} by default but nooooo it is a [] of {}'s
   const [questItemIDResults, setQuestItemIDResults] = useState([]);
   const [releventQuests, setReleventQuests] = useState([]);
+  const [questItems, setQuestItems] = useState([]);
 
   const searchInput = useRef();
   const handleFocus = () => {
@@ -40,16 +41,12 @@ const ItemsQuery = () => {
 
   const questItem = questData?.quests
     .map((quest) => quest.objectives)
-    .flatMap((objectives) =>
-      objectives
-        .map((objective) => objective.target)
-        .filter((item) => item.includes(itemID))
-    )
+    .flatMap((objectives) => objectives.map((objective) => objective.target))
 
     .toString()
     .includes(itemID);
 
-  console.log(questItem, "questItem");
+  console.log(questItems, "questItem");
 
   const { data: releventQuestData } = useQuery(QUEST_RESULTS);
 
@@ -61,6 +58,7 @@ const ItemsQuery = () => {
       setQuestItemIDResults(questData.quests);
 
       setReleventQuests(releventQuestData.quests);
+      setQuestItems(questItem);
     }
   }, [data]);
 
@@ -68,31 +66,36 @@ const ItemsQuery = () => {
 
   const Items = ({ item, quest }) => {
     // console.log(quest, "quest");
-    return (
+    return filter === "" ? null : (
       <div className="quest-item">
         <span>
           <h2>{item.name}</h2>
-          <h4>{item.id}</h4>
+          <h4>
+            Current avg price:{" "}
+            <strong>
+              <NumberFormat
+                thousandSeparator={true}
+                thousandsGroupStyle="thousand"
+                prefix={"₽"}
+                value={item.avg24hPrice}
+                displayType={"text"}
+              />
+            </strong>
+          </h4>
           <img src={item.imageLink} alt={item.name} />
 
-          <div>
-            <NumberFormat
-              thousandSeparator={true}
-              thousandsGroupStyle="thousand"
-              prefix={"₽"}
-              value={item.avg24hPrice}
-              displayType={"text"}
-            />
-          </div>
-
           {questItem ? (
-            <div>
+            <div className="relevent-quests">
               <h2>Relevent Quests</h2>
               <ul>
                 {quest.map((quest) =>
                   quest.objectives.map((objectives) =>
                     objectives.target.includes(itemID) ? (
-                      <li key={quest.id}>{quest.title}</li>
+                      <div className="quest" key={quest.id}>
+                        <h3>Quest: {quest.title}</h3>
+                        <h3>Total: {objectives.number}</h3>
+                        <h3> Trader: {quest.turnin.name}</h3>
+                      </div>
                     ) : null
                   )
                 )}
@@ -106,9 +109,9 @@ const ItemsQuery = () => {
 
   if (loading)
     return (
-      <div className="App">
+      <div>
         <div>
-          <img src={supabase} className="App-logo" alt="logo" />
+          <img src={killaImage} className="App-logo" alt="logo" />
 
           <p>Loading...</p>
         </div>
@@ -117,9 +120,9 @@ const ItemsQuery = () => {
 
   if (error)
     return (
-      <div className="App">
+      <div>
         <div>
-          <img src={supabase} className="App-logo" alt="logo" />
+          <img src={killaImage} className="App-logo" alt="logo" />
           <p>YUUUUUUUUUURRRRRT</p>
           <p>Error :`(`</p>
         </div>
@@ -127,9 +130,9 @@ const ItemsQuery = () => {
     );
 
   return (
-    <div className="App">
+    <div>
       <div>
-        <img src={supabase} className="App-logo" alt="logo" />
+        <img src={killaImage} className="App-logo" alt="logo" />
         <p>Enter item name</p>
         <form onSubmit={handleClick}>
           <input
