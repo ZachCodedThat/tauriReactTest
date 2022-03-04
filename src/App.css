@@ -11,14 +11,14 @@
 .quest-item {
   max-width: 150px;
   margin: 10px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+
   place-content: center;
 }
 
 .quest-item img {
-  max-width: 150px;
-  max-height: 150px;
+  max-width: 200px;
+  max-height: 200px;
 }
 
 .App-logo {
