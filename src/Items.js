@@ -2,10 +2,24 @@ import { useQuery } from "@apollo/client";
 import { useState, useEffect, useRef } from "react";
 import useDebounce from "./useDebounce";
 import Fuse from "fuse.js";
-import killaImage from "./killaImage.gif";
+import killaGif from "./killaImage.gif";
+import KillaSticker from "./KillaSticker.png";
+import GluharSticker from "./GluharSticker.png";
+import TagilaSticker from "./TagilaSticker.png";
+import SturmanSticker from "./SturmanSticker.png";
+import SanitarSticker from "./SanitarSticker.png";
+
 import NumberFormat from "react-number-format";
 
 import { ITEM_RESULTS, QUEST_RESULTS } from "./Queries";
+
+const BOSS_IMAGES = [
+  KillaSticker,
+  GluharSticker,
+  TagilaSticker,
+  SturmanSticker,
+  SanitarSticker,
+];
 
 const ItemsQuery = () => {
   const [filter, setFilter] = useState("");
@@ -109,9 +123,18 @@ const ItemsQuery = () => {
 
   if (loading)
     return (
-      <div>
+      <div className="App">
         <div>
-          <img src={killaImage} className="App-logo" alt="logo" />
+          <span>
+            {BOSS_IMAGES.map((image, index) => (
+              <img
+                className="bossImages"
+                src={image}
+                alt={`boss${index}`}
+                key={index}
+              />
+            ))}
+          </span>
 
           <p>Loading...</p>
         </div>
@@ -120,9 +143,9 @@ const ItemsQuery = () => {
 
   if (error)
     return (
-      <div>
+      <div className="App">
         <div>
-          <img src={killaImage} className="App-logo" alt="logo" />
+          <img src={killaGif} className="App-logo" alt="logo" />
           <p>YUUUUUUUUUURRRRRT</p>
           <p>Error :`(`</p>
         </div>
@@ -130,24 +153,31 @@ const ItemsQuery = () => {
     );
 
   return (
-    <div>
+    <div className="App">
       <div>
-        <img src={killaImage} className="App-logo" alt="logo" />
-        <p>Enter item name</p>
-        <form onSubmit={handleClick}>
-          <input
-            type="text"
-            value={value}
-            onChange={handleChange}
-            ref={searchInput}
+        {BOSS_IMAGES.map((image, index) => (
+          <img
+            className="bossImages"
+            src={image}
+            alt={`boss${index}`}
+            key={index}
           />
-          <button type="submit">Search</button>
-        </form>
-        <div className="outerContainer">
-          {queryResults.map((item) => (
-            <Items key={item.id} item={item} quest={releventQuests} />
-          ))}
-        </div>
+        ))}
+      </div>
+      <h1>Enter item name</h1>
+      <form onSubmit={handleClick}>
+        <input
+          type="text"
+          value={value}
+          onChange={handleChange}
+          ref={searchInput}
+        />
+        <button type="submit">Search</button>
+      </form>
+      <div className="outerContainer">
+        {queryResults.map((item) => (
+          <Items key={item.id} item={item} quest={releventQuests} />
+        ))}
       </div>
     </div>
   );

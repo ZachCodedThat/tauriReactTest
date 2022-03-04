@@ -1,5 +1,6 @@
 .App {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -8,6 +9,22 @@
   display: grid;
 
   grid-template-columns: 33% 33% 33%;
+}
+
+.bossImages {
+  max-width: 250px;
+  max-height: 250px;
+}
+
+@media screen and (max-width: 600px) {
+  .outerContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .bossImages {
+    max-width: 80px;
+    max-height: 80px;
+  }
 }
 
 .quest-item {

@@ -4,7 +4,7 @@ import ItemsQuery from "./Items";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <ItemsQuery />
     </div>
   );
