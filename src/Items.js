@@ -26,9 +26,9 @@ const ItemsQuery = () => {
   const [value, setValue] = useState("");
 
   const [queryResults, setQueryResults] = useState([]); // I an stupid and thought this would be an {} by default but nooooo it is a [] of {}'s
-  const [questItemIDResults, setQuestItemIDResults] = useState([]);
+  // const [questItemIDResults, setQuestItemIDResults] = useState([]);
   const [releventQuests, setReleventQuests] = useState([]);
-  const [questItems, setQuestItems] = useState([]);
+  // const [questItems, setQuestItems] = useState([]);
 
   const searchInput = useRef();
   const handleFocus = () => {
@@ -53,14 +53,14 @@ const ItemsQuery = () => {
 
   const { data: questData } = useQuery(QUEST_RESULTS);
 
-  const questItem = questData?.quests
-    .map((quest) => quest.objectives)
-    .flatMap((objectives) => objectives.map((objective) => objective.target))
+  // const questItem = questData?.quests
+  //   .map((quest) => quest.objectives)
+  //   .flatMap((objectives) => objectives.map((objective) => objective.target))
 
-    .toString()
-    .includes(itemID);
+  //   .toString()
+  //   .includes(itemID);
 
-  console.log(questItems, "questItem");
+  // console.log(questItems, "questItem");
 
   const { data: releventQuestData } = useQuery(QUEST_RESULTS);
 
@@ -69,17 +69,20 @@ const ItemsQuery = () => {
   useEffect(() => {
     if (filter !== "" && itemID !== undefined) {
       setQueryResults(data.itemsByName);
-      setQuestItemIDResults(questData.quests);
+      // setQuestItemIDResults(questData.quests);
 
       setReleventQuests(releventQuestData.quests);
-      setQuestItems(questItem);
+      // setQuestItems(questItem);
     }
   }, [data]);
 
   // actual item component
 
   const Items = ({ item, quest }) => {
-    // console.log(quest, "quest");
+    const [show, setShow] = useState(false);
+
+    const handleToggle = () => setShow(!show);
+
     return filter === "" ? null : (
       <div className="quest-item">
         <span>
@@ -98,24 +101,27 @@ const ItemsQuery = () => {
           </h4>
           <img src={item.imageLink} alt={item.name} />
 
-          {questItem ? (
-            <div className="relevent-quests">
-              <h2>Relevent Quests</h2>
-              <ul>
-                {quest.map((quest) =>
-                  quest.objectives.map((objectives) =>
-                    objectives.target.includes(itemID) ? (
-                      <div className="quest" key={quest.id}>
-                        <h3>Quest: {quest.title}</h3>
-                        <h3>Total: {objectives.number}</h3>
-                        <h3> Trader: {quest.turnin.name}</h3>
-                      </div>
-                    ) : null
-                  )
-                )}
-              </ul>
-            </div>
-          ) : null}
+          {quest.map((quest) =>
+            quest.objectives.map((objectives) =>
+              objectives.target.includes(item.id) ? (
+                <>
+                  <button onClick={handleToggle}>Relevant Quests</button>
+                  {show ? (
+                    <div className="relevent-quests">
+                      <h2>Relevent Quests</h2>
+                      <ul>
+                        <div className="quest" key={quest.id}>
+                          <h3>Quest: {quest.title}</h3>
+                          <h3>Total: {objectives.number}</h3>
+                          <h3> Trader: {quest.turnin.name}</h3>
+                        </div>
+                      </ul>
+                    </div>
+                  ) : null}
+                </>
+              ) : null
+            )
+          )}
         </span>
       </div>
     );
@@ -145,10 +151,16 @@ const ItemsQuery = () => {
     return (
       <div className="App">
         <div>
-          <img src={killaGif} className="App-logo" alt="logo" />
-          <p>YUUUUUUUUUURRRRRT</p>
-          <p>Error :`(`</p>
+          {BOSS_IMAGES.map((image, index) => (
+            <img
+              className="bossImages"
+              src={image}
+              alt={`boss${index}`}
+              key={index}
+            />
+          ))}
         </div>
+        <p>Error :`(`</p>
       </div>
     );
 

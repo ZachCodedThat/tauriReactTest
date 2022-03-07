@@ -5,9 +5,19 @@
   align-items: center;
 }
 
+button {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .outerContainer {
   display: grid;
-
+  width: 1200px;
   grid-template-columns: 33% 33% 33%;
 }
 
@@ -29,6 +39,7 @@
 
 .quest-item {
   width: 250px;
+  height: max-content;
   margin: 10px;
   /* padding: 10px; */
 
