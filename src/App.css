@@ -1,24 +1,86 @@
 .App {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .outerContainer {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  place-items: center;
+  width: 1200px;
+  grid-template-columns: 33% 33% 33%;
+}
+
+.bossImages {
+  max-width: 250px;
+  max-height: 250px;
+}
+
+@media screen and (max-width: 600px) {
+  .outerContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .bossImages {
+    max-width: 80px;
+    max-height: 80px;
+  }
 }
 
 .quest-item {
-  max-width: 150px;
+  width: 250px;
+  height: max-content;
   margin: 10px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  place-content: center;
+  /* padding: 10px; */
+
+  border: #282c34 solid 1px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.quest-item h2,
+h4 {
+  padding: 10px;
 }
 
 .quest-item img {
-  max-width: 150px;
-  max-height: 150px;
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.relevent-quests {
+  background-color: #282c34;
+  color: #fff;
+
+  padding: 5px;
+  text-align: center;
+}
+
+.relevent-quests ul {
+  margin: 0;
+  padding: 0;
+}
+
+.quest {
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: #fff solid 1px;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  margin-bottom: 10px;
 }
 
 .App-logo {
@@ -45,13 +107,4 @@
 
 .App-link {
   color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

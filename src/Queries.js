@@ -7,6 +7,7 @@ export const ITEM_RESULTS = gql`
       normalizedName
       id
       imageLink
+      avg24hPrice
     }
   }
 `;
@@ -19,18 +20,9 @@ export const QUEST_RESULTS = gql`
       turnin {
         name
       }
-
-      requirements {
-        level
-      }
       objectives {
         number
         target
-
-        targetItem {
-          name
-          imageLink
-        }
       }
     }
   }

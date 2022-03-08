@@ -49,6 +49,7 @@ export default function Quests() {
             .map((questRequirements) => (
               <div>
                 <img src={questRequirements.targetItem.imageLink} />
+                <h4>{questRequirements.targetItem.id}</h4>
                 <span>
                   {questRequirements.targetItem.name != null
                     ? ` X ${questRequirements.number}`
@@ -68,7 +69,7 @@ export default function Quests() {
       <div className="App">
         <div>
           <img src={supabase} className="App-logo" alt="logo" />
-          <p>YUUUUUUUUUURRRRRT</p>
+
           <p>Loading...</p>
         </div>
       </div>
